@@ -14,10 +14,10 @@ jobs:
       - name: 'Send mail'
         uses: dawidd6/action-send-mail@master
         with:
-          server_address: smtp.qq.com
+          server_address: smtp.pku.edu.cn
           server_port: 465
-          username: 576692043@qq.com
-          password: agmyouwqarubbcbb
+          username: 1800011778@pku.edu.cn
+          password: yygwzzjsbd1
           subject: test email
           body: test body 
           to: 576692043@qq.com
