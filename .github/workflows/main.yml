@@ -16,8 +16,8 @@ jobs:
         with:
           server_address: smtp.pku.edu.cn
           server_port: 465
-          username: 1800011778@pku.edu.cn
-          password: yygwzzjsbd1
+          username: ${{ secrets.EMAIL_NAME}}$
+          password: ${{ secrets.EMAIL_PASSWORD}}$
           subject: test email
           body: test body 
           to: 576692043@qq.com
