@@ -15,8 +15,10 @@ titles=re.findall(pattern2,r)
 #print(titles)
 
 flag=False
-with open('article.txt','r',encoding='utf-8') as f:
+with open('info.txt','r',encoding='utf-8') as f:
     title=f.readline().strip()
+    print(title)
+    print(titles[0])
     if(title!=titles[0]):
         #更新
         flag=True
