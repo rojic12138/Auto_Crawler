@@ -1,5 +1,6 @@
 import requests
 import re
+import os
 
 headers={
      'User-Agent':'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
@@ -44,3 +45,5 @@ if(flag):
         f.write('\n')
         f.write(ids[0])
     Get_article(ids[0])
+
+os.environ["Changed"]=flag
