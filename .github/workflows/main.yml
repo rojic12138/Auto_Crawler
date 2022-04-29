@@ -37,8 +37,8 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: weibo 
-          body: file://weibo.txt
+          subject: New article
+          body: file://article.txt
           to: 576692043@qq.com
           from: GitHub Actions
           content_type: text/html
