@@ -28,12 +28,12 @@ jobs:
       
       - name: Crawler
         env:
-          CHANGED: ${{ secrets.CHANGED }}
+          CHANGED: 'True'
         run:
           python Crawler.py
           
       - name: 'Send mail'
-        if: ${{ env.CHANGED }}
+        if: ${{ env.CHANGED=='True' }}
         uses: dawidd6/action-send-mail@master
         with:
           server_address: smtp.pku.edu.cn
