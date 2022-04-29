@@ -27,11 +27,13 @@ jobs:
           pip install -r requirements.txt
       
       - name: Crawler
+        env:
+          CHANGED: ${{ secrets.CHANGED }}
         run:
           python Crawler.py
-      
+          
       - name: 'Send mail'
-        if: ${{ secrets.CHANGED =='True' }}
+        if: ${{ env.CHANGED }}
         uses: dawidd6/action-send-mail@master
         with:
           server_address: smtp.pku.edu.cn
