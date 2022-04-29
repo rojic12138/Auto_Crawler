@@ -28,6 +28,8 @@ def Get_article(article_id):
     title=re.findall('<h1>(.*?)</h1>',r)[0]
     infos=re.findall('<div class="d2txt_1 clearfix">(.*?)&nbsp;&nbsp;(.*?)</div>',r)
     paras=re.findall(r'\n<p style="text-indent: 2em;">(.*?)</p>',r,re.DOTALL)
+    if(len(paras)==0):
+        paras=re.findall(r'\n<p>(.*?)</p>',r,re.DOTALL)
     #print(r)
     #print(paras)
     with open('article.txt','w',encoding='utf-8') as f:
