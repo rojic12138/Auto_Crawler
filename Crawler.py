@@ -46,4 +46,4 @@ if(flag):
         f.write(ids[0])
     Get_article(ids[0])
 
-os.environ["CHANGED"]=flag
+os.environ["CHANGED"]=str(flag)
