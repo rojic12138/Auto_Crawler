@@ -48,7 +48,11 @@ jobs:
           from: GitHub Actions
           content_type: text/html
       
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Action Commit
+          push_options: --force
 
 
 
