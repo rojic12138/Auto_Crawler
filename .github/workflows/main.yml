@@ -43,19 +43,14 @@ jobs:
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: New article
           body: file://article.txt
-          to: 576692043@qq.com, hyw1368@pku.edu.cn
+          to: 576692043@qq.com
+          #, hyw1368@pku.edu.cn
           from: GitHub Actions
           content_type: text/html
       
-      - uses: actions/checkout@v2
-      - name: Create report file
-        run: date +%s > report.txt
-      - name: Commit report
-        run: |
-          git config --global user.name 'rojic12138'
-          git config --global user.email 'rojic12138@users.noreply.github.com'
-          git commit -am "Automated report"
-          git push
+      - name: Push changes
+        if: env.CHANGED=='True'
+        uses: ad-m/github-push-action@master
 
 
 
