@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: New article
           body: file://article.txt
-          to: 576692043@qq.com
+          to: 576692043@qq.com, hyw1368@pku.edu.cn
           from: GitHub Actions
           content_type: text/html
 
