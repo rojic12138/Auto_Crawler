@@ -47,18 +47,15 @@ jobs:
           from: GitHub Actions
           content_type: text/html
       
-      - name: Commit files
-        id: commit
+      - uses: actions/checkout@v2
+      - name: Create report file
+        run: date +%s > report.txt
+      - name: Commit report
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add --all
-          if [-z "$(git status --porcelain)"]; then
-             echo "::set-output name=push::false"
-          else
-             git commit -m "Add changes" -a
-             echo "::set-output name=push::true"
-          fi
+          git config --global user.name 'rojic12138'
+          git config --global user.email 'rojic12138@users.noreply.github.com'
+          git commit -am "Automated report"
+          git push
 
 
 
