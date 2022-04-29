@@ -26,8 +26,8 @@ def Get_article(article_id):
     title=re.findall('<h1>(.*?)</h1>',r)[0]
     infos=re.findall('<div class="d2txt_1 clearfix">(.*?)&nbsp;&nbsp;(.*?)</div>',r)
     paras=re.findall(r'\n<p style="text-indent: 2em;">(.*?)</p>',r,re.DOTALL)
-    print(r)
-    print(paras)
+    #print(r)
+    #print(paras)
     with open('article.txt','w',encoding='utf-8') as f:
         f.write(title)
         f.write('\n')
@@ -38,7 +38,8 @@ def Get_article(article_id):
         for para in paras:
             f.write(para)
             f.write('\n')
-    
+   
+print(flag)
 if(flag):
     with open('info.txt','w',encoding='utf-8') as f:
         f.write(titles[0])
