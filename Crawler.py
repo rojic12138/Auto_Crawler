@@ -2,15 +2,47 @@ import requests
 import re
 
 headers={
-     'User-Agent':'spider',
-     'Cookie': 'SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WFRD2zQV.Nv5liSuzVQRIme; SINAGLOBAL=1619748558311.7532.1648224332278; _ga=GA1.2.1761206650.1648261853; UOR=www.google.com.hk,weibo.com,www.reddit.com; SUB=_2AkMVEyk6f8NxqwJRmP4Qz2PnaI9wzwnEieKjT9jhJRMxHRl-yT9jqmwJtRB6PpMHyJrCQfUp96jttrVFyWTXCJncWkeb; XSRF-TOKEN=4f8RUht1K3EMZh6KtX_iOJCp; _s_tentry=weibo.com; Apache=8663029303723.884.1651209220471; ULV=1651209220502:5:4:2:8663029303723.884.1651209220471:1650632005852; WBPSESS=kErNolfXeoisUDB3d9TFH7v_0508OYh5kSAiPW__Ihin_d28-zMtt78hVQtGMPB0afmMk9jmuXbmGvF2evmwBO-DdU8Bgc4Vxrzej-h8yLr9q39ggvUNBtj-pkMhxRy-V2FfV17SoQQ3jrsumSdwKNvrKzT_gSeapK7RPdKBXo8=; PC_TOKEN=0dee64ed41'
+     'User-Agent':'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
 }
-r=requests.get('https://s.weibo.com/top/summary',headers=headers).text
-pattern=re.compile(r'target="_blank">(.*?)</a>',re.S)
-titles=re.findall(pattern,r)
-print(titles)
+r=requests.get('http://jhsjk.people.cn/',headers=headers).text
+#print(r)
+with open('weibo.txt','w',encoding='utf-8') as f:
+    f.write(r)
+    
+pattern1=re.compile(r'<li><a href="article/(.*?)\?isindex=1" target="_blank"><span>.*?</span><i>.*?</i></a></li>')
+ids=re.findall(pattern1,r)
+#print(ids)
+pattern2=re.compile('<li><a href="article/.*?\?isindex=1" target="_blank"><span>(.*?)</span><i>.*?</i></a></li>')
+titles=re.findall(pattern2,r)
+#print(titles)
 
-with open('weibo.txt','w') as f:
-    for i in range(len(titles)-2):
-        f.write(titles[i])
+flag=False
+with open('info.txt','r') as f:
+    title=f.read()
+    if(title!=titles[0]):
+        #更新
+        flag=True
+        
+def Get_article(article_id):
+    r=requests.get('http://jhsjk.people.cn/article/'+article_id,headers=headers).text
+    title=re.findall('<h1>(.*?)</h1>',r)[0]
+    infos=re.findall('<div class="d2txt_1 clearfix">(.*?)&nbsp;&nbsp;(.*?)</div>',r)
+    paras=re.findall(r'\n<p style="text-indent: 2em;">(.*?)</p>',r,re.DOTALL)
+    print(r)
+    print(paras)
+    with open('article.txt','w') as f:
+        f.write(title)
         f.write('\n')
+        f.write(infos[0][0])
+        f.write(infos[0][1])
+        f.write('\n')
+        for para in paras:
+            f.write(para)
+            f.write('\n')
+    
+if(flag):
+    with open('info.txt','w') as f:
+        f.write(titles[0])
+        f.write('\n')
+        f.write(ids[0])
+    Get_article(ids[0])
