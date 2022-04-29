@@ -16,7 +16,7 @@ titles=re.findall(pattern2,r)
 
 flag=False
 with open('article.txt','r',encoding='utf-8') as f:
-    title=f.read()
+    title=f.readline().strip()
     if(title!=titles[0]):
         #更新
         flag=True
@@ -39,7 +39,7 @@ def Get_article(article_id):
             f.write(para)
             f.write('\n')
    
-print(flag)
+#print(flag)
 if(flag):
     with open('info.txt','w',encoding='utf-8') as f:
         f.write(titles[0])
