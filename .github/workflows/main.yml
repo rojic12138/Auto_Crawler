@@ -31,7 +31,8 @@ jobs:
           CHANGED: 'False'
         run:
           python Crawler.py
-          
+          echo ${{ env.CHANGED }}
+        
       - name: 'Send mail'
         if:  env.CHANGED=='True' &&  success()
         uses: dawidd6/action-send-mail@master
