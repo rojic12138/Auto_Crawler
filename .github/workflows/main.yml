@@ -48,9 +48,7 @@ jobs:
           from: GitHub Actions
           content_type: text/html
       
-      - name: Push changes
-        if: env.CHANGED=='True'
-        uses: ad-m/github-push-action@master
+      - uses: stefanzweifel/git-auto-commit-action@v4
 
 
 
