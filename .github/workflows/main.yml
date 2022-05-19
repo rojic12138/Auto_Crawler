@@ -33,6 +33,8 @@ jobs:
         env:
           CHANGED: 'False'
         run:
+          sudo cp -p ./chrome/chromedriver /usr/bin/
+          chmod -R 777 /usr/bin/chromedriver
           python Crawler.py
           echo ${{ env.CHANGED }}
         
