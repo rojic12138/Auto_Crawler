@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
 import os
+from selenium.webdriver.chrome.options import Options
 
 headers={
      'User-Agent':'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
@@ -24,8 +25,16 @@ with open('info.txt','r',encoding='utf-8') as f:
         flag=True
         
 def Get_article(article_id):
-    browser = webdriver.Chrome()
-    browser.maximize_window()
+    #browser = webdriver.Chrome()
+    #browser.maximize_window()
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chromedriver = "/usr/bin/chromedriver"
+    os.environ["webdriver.chrome.driver"] = chromedriver
+    browser = webdriver.Chrome(chrome_options=chrome_options,executable_path=chromedriver)
     browser.get('http://jhsjk.people.cn/article/'+article_id)
     
     title=browser.find_element(By.XPATH,'/html/body/div[5]/h1').text
