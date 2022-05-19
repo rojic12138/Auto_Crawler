@@ -32,7 +32,7 @@ jobs:
       - name: Crawler
         env:
           CHANGED: 'False'
-        run:
+        run:|
           sudo cp -p ./chrome/chromedriver /usr/bin/
           chmod -R 777 /usr/bin/chromedriver
           python Crawler.py
