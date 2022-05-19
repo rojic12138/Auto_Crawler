@@ -1,4 +1,6 @@
 import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 import re
 import os
 
@@ -9,10 +11,8 @@ r=requests.get('http://jhsjk.people.cn/',headers=headers).text
     
 pattern1=re.compile(r'<li><a href="article/(.*?)\?isindex=1" target="_blank"><span>.*?</span><i>.*?</i></a></li>')
 ids=re.findall(pattern1,r)
-#print(ids)
 pattern2=re.compile('<li><a href="article/.*?\?isindex=1" target="_blank"><span>(.*?)</span><i>.*?</i></a></li>')
 titles=re.findall(pattern2,r)
-#print(titles)
 
 flag=False
 with open('info.txt','r',encoding='utf-8') as f:
@@ -24,23 +24,21 @@ with open('info.txt','r',encoding='utf-8') as f:
         flag=True
         
 def Get_article(article_id):
-    r=requests.get('http://jhsjk.people.cn/article/'+article_id,headers=headers).text
-    title=re.findall('<h1>(.*?)</h1>',r)[0]
-    infos=re.findall('<div class="d2txt_1 clearfix">(.*?)&nbsp;&nbsp;(.*?)</div>',r)
-    paras=re.findall(r'\n<p style="text-indent: 2em;">(.*?)</p>',r,re.DOTALL)
-    if(len(paras)==0):
-        paras=re.findall(r'\n<p>(.*?)</p>',r,re.DOTALL)
-    #print(r)
-    #print(paras)
+    browser = webdriver.Chrome()
+    browser.maximize_window()
+    browser.get('http://jhsjk.people.cn/article/'+article_id)
+    
+    title=browser.find_element(By.XPATH,'/html/body/div[5]/h1').text
+    info=browser.find_element(By.XPATH,'/html/body/div[5]/div[1]').text
+    paras=browser.find_elements(By.XPATH,'/html/body/div[5]/div[2]/p')
     with open('article.txt','w',encoding='utf-8') as f:
         f.write(title)
         f.write('\n')
         f.write('\n')
-        f.write(infos[0][0])
-        f.write(infos[0][1])
+        f.write(info)
         f.write('\n')
         for para in paras:
-            f.write(para)
+            f.write(para.text)
             f.write('\n')
    
 #print(flag)
@@ -50,7 +48,7 @@ if(flag):
         f.write('\n')
         f.write(ids[0])
     Get_article(ids[0])
-
+    
 env_file = os.getenv('GITHUB_ENV')
 with open(env_file, "a") as myfile:
     myfile.write("CHANGED="+str(flag))
